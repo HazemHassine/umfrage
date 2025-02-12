@@ -9,7 +9,7 @@
 
 ## System Overview
 - **Architecture**: Monolithic
-- **Technology Stack**: Next.js, MongoDB, Tailwind CSS, JavaScript, Stripe (Payment Gateway)
+- **Technology Stack**: Next.js, MongoDB, Tailwind CSS, JavaScript, Stripe (Payment Gateway)****
 
 ## User Roles and Features
 ### Poll Creator
@@ -37,10 +37,20 @@
 - **Styling**: Tailwind CSS
 - **Pages**:
     - Home
-    - Poll Creation
+      - \#Offers for Poll Creators
+      - \#Offers for Participant
+    - About us
+    - Contact us
+    - Sign-in
+    - Sign-up
+      - \#for Poll Creators
+      - \#for Poll Participants
+        - \#Pre-qualification Questionnaire
+    - Poll Creation (with all it's variants)
     - Dashboard
-    - Poll Response
-    - Pre-qualification Questionnaire
+      - \#For Poll creators with statistics
+      - \#For respondants will also be the profile page, contains history of answers, credits and available polls.
+    - Poll Response (with all it's variants)
 
 ### Backend
 - **Framework**: Next.js (API Routes)
@@ -49,11 +59,11 @@
     - Data Validation and Sanitization
     - Real-time Updates with Sockets
     - Backup and Recovery
-    - Payment Processing with Stripe
+    - Payment Processing with Stripe ±
 
 ## Security Considerations
 - **Rate Limiting**: Protect against abuse by limiting the number of requests per user/IP.
-- **Role-Based Access Control**: Different access levels for creators and respondents.
+- **Role-Based Access Control**: Different access levels for creators and respondents (and the Admin).
 
 ## Performance Metrics
 - **Load Time**: Ensure the website loads within 3 seconds for optimal user experience.
@@ -62,9 +72,9 @@
 ## Database Design
 - **Schema**: MongoDB schema design for users, polls, responses, and payments.
 - **Relationships**: Users linked to polls they create or respond to, payment records associated with user accounts.
-
+ 
 ## API Design
-- **Endpoints**:
+- **Endpoints**: (_to be edited_)
     - **POST /api/signup**: User registration
     - **POST /api/login**: User authentication
     - **POST /api/polls**: Create a new poll
@@ -82,7 +92,7 @@
 - **Tools and Frameworks**: Jest, React Testing Library, Postman for API testing.
 
 ## Deployment and Scaling
-- **Strategy**: Auto-scaling and Load Balancing using cloud services.
+- **Strategy**: Auto-scaling and Load Balancing using cloud services. (!! Not final !!)
 - **Tools**: Vercel for deployment, MongoDB Atlas for database hosting, Stripe for payment processing.
 
 ## Appendix
