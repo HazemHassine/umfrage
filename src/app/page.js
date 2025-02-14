@@ -1,113 +1,151 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import Image from "next/image";
 import NavbarUniversal from "./components/NavbarUniversal";
 import Stats from "./components/Stats";
-import HorizontalCard from "./components/HorizontalCard";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Coins, Wallet, Smartphone, Shield } from "lucide-react";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
+import { useInView } from 'react-intersection-observer';
 
-// Home page
+const AnimatedSection = ({ children }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+    rootMargin: '-50px 0px'
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 export default function Home() {
-  const specs = [
+  const whyUs = [
     {
-      title: "Origin",
-      description: "Designed by Good Goods, Inc.",
+      icon: <Coins size={40} className="text-blue-400" />,
+      title: "Lower Fees",
+      description: "We offer lower fees compared to competitors, ensuring more value for both creators and participants.",
     },
     {
-      title: "Material",
-      description: "Solid walnut base with rare earth magnets and polycarbonate add-ons.",
+      icon: <Wallet size={40} className="text-green-400" />,
+      title: "Higher Payouts",
+      description: "Participants earn more for their time, making Umfrage the most rewarding platform for answering polls.",
     },
     {
-      title: "Dimensions",
-      description: '15" x 3.75" x .75"',
+      icon: <Smartphone size={40} className="text-purple-400" />,
+      title: "Ease of Use",
+      description: "Creating and participating in polls is simple, efficient, and fully customizable to your needs.",
     },
     {
-      title: "Finish",
-      description: "Hand sanded and finished with natural oil",
-    },
-    {
-      title: "Includes",
-      description: "Pen Tray, Phone Tray, Small Tray, Large Tray, Sticky Note Holder",
-    },
-    {
-      title: "Considerations",
-      description: "Made from natural materials. Grain and color vary with each item.",
-    },
+      icon: <Shield size={40} className="text-yellow-400" />,
+      title: "AI-Powered Security",
+      description: "Our smart AI security layer detects and prevents bot activity, ensuring genuine responses and data integrity.",
+    }
   ];
 
   return (
-    <div>
+    <div className="w-full">
       <NavbarUniversal />
-      <div id="intro" className="mx-48 mt-10 flex justify-between">
-        <div className="w-1/2">
-          <h1 className="text-3xl font-bold">The easiest way to create online polls and get paid for answering them</h1>
-          <p className="text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-          <div className="flex mt-16 gap-4">
-            <button className="py-1 px-4 bg-slate-500 hover:bg-slate-600 transition-all duration-200 ease-in-out rounded-sm text-white focus:ring-0">For Creators</button>
-            <button className="py-1 px-4 bg-slate-500 hover:bg-slate-600 transition-all duration-200 ease-in-out rounded-sm text-white focus:ring-0">For Participants</button>
-          </div>
-        </div>
-        <div className="px-auto w-1/3"><Image src="/simplistic-woman-answering-questionnaire.png"
-          width={500}
-          height={500}
-          alt="woman answering questionnaire" /></div>
-      </div>
-      <Stats />
-      <div className="bg-gray-900 px-48 mt-20">
-        <h1 className="text-4xl font-bold text-white text-center py-10">For Poll Creators</h1>
-        <div className="flex gap-0">
-          <div className="max-w-2xl w-full space-y-8">
-            {[
-              { icon: Mail, title: "Email", description: "contact@example.com contact@example.com contact@example.com contact@example.com" },
-              { icon: MapPin, title: "Address", description: "123 Main St, Anytown, USA 12345 123 Main St, Anytown, USA 12345123 Main St, Anytown, USA 12345123 Main St, Anytown, USA 12345" },
-            ].map((card, index) => (
-              <HorizontalCard key={index} icon={card.icon} title={card.title} description={card.description} />
-            ))}
-          </div>
-          <div className="pt-4">
-            <Image src="/tree.png"
-              alt="nothing"
-              height={1076 / 2}
-              width={522 / 2} />
-          </div>
-          <div className="max-w-2xl w-full space-y-11">
-            {[
-              { icon: Mail, title: "Email", description: "contact@example.com contact@example.com contact@example.com contact@example.com" },
-              { icon: MapPin, title: "Address", description: "123 Main St, Anytown, USA 12345 123 Main St, Anytown, USA 12345 123 Main St, Anytown, USA 12345123 Main St, Anytown, USA 12345123 Main St, Anytown, USA 12345" },
-            ].map((card, index) => (
-              <HorizontalCard key={index} icon={card.icon} title={card.title} description={card.description} />
-            ))}
-          </div>
-        </div>
-      </div>
-      <div>
-        <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20from%202025-02-12%2017-52-08-iy0hbuxAltZXoEUj5yKtkwoMuvLvmr.png"
-              alt="Desk organization system showing coffee mug, pen holders, and phone stand"
-              className="w-full h-auto rounded-lg mb-8"
-            />
 
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">Technical Specifications</h2>
-
-            <p className="text-center text-gray-600 mb-12">
-              Organize is a system to keep your desk tidy and photo-worthy all day long. Procrastinate your work while you
-              meticulously arrange items into dedicated trays.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-              {specs.map((spec, index) => (
-                <div key={index} className="border-t border-gray-200 pt-4">
-                  <h3 className="text-sm font-medium text-gray-900 mb-2">{spec.title}</h3>
-                  <p className="text-sm text-gray-600">{spec.description}</p>
+      <main className="">
+        {/* Hero Section */}
+        <section className="min-h-[90vh] pt-20 mb-20">
+          <AnimatedSection>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row items-center gap-12">
+              <div className="md:w-1/2 space-y-8">
+                <motion.h1
+                  className="text-4xl sm:text-5xl md:text-6xl font-bold"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  Transform Surveys into Earnings with{' '}
+                  <span className="text-blue-600">Umfrage</span>
+                </motion.h1>
+                <p className="text-lg text-gray-600">
+                  Create engaging polls effortlessly or earn rewards by participating in surveys -
+                  all in one secure platform.
+                </p>
+                <div className="flex gap-4">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    className="py-3 px-8 bg-blue-600 text-white rounded-lg text-lg font-medium"
+                  >
+                    Get Started Free
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    className="py-3 px-8 border-2 border-blue-600 text-blue-600 rounded-lg text-lg font-medium"
+                  >
+                    How It Works
+                  </motion.button>
                 </div>
-              ))}
+              </div>
+              <div className="md:w-1/2 flex justify-center">
+                <motion.div
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Image
+                    src="/simplistic-woman-answering-questionnaire.png"
+                    width={600}
+                    height={600}
+                    alt="Survey illustration"
+                  />
+                </motion.div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <FAQ />
+            <Stats />
+
+          </AnimatedSection>
+        </section>
+
+
+        {/* Why Choose Us */}
+        <section className="py-20 bg-gradient-to-br from-blue-900 to-purple-900">
+          <AnimatedSection>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-4xl font-bold text-center text-white mb-16">
+                Why Choose Umfrage?
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {whyUs.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center space-y-6"
+                  >
+                    <div className="flex justify-center">{item.icon}</div>
+                    <h3 className="text-2xl font-bold text-white">{item.title}</h3>
+                    <p className="text-gray-200">{item.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-20 bg-gray-50">
+          <AnimatedSection>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <FAQ />
+            </div>
+          </AnimatedSection>
+        </section>
+      </main>
+
       <Footer />
-    </div>);
+    </div>
+  );
 }
