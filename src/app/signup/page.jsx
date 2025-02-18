@@ -5,10 +5,13 @@ import { auth } from "@/lib/firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { motion, AnimatePresence } from "framer-motion"
 import { createUser } from "@/lib/api"
+import { useRouter } from "next/navigation"
+
 
 export default function SignUpPage() {
+  const router = useRouter()
   // Role selection: "participant" or "creator"
-  const [role, setRole] = useState(null)
+  const [role, setRole] = useState(null)  
 
   // Common fields
   const [name, setName] = useState("")
@@ -53,8 +56,7 @@ export default function SignUpPage() {
 
       // Send user data to our API to store in MongoDB
       await createUser(userData)
-
-      alert("Account created successfully! You can now log in.")
+      router.replace("/profile")
     } catch (error) {
       alert(error.message)
     } finally {
