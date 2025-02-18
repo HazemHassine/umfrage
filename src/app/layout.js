@@ -1,4 +1,8 @@
+'use client'
+
 import { Geist, Geist_Mono } from "next/font/google";
+import { AuthProvider } from '@/contexts/AuthContext';
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -11,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+const metadata = {
   title: "Umfrage: online polling website",
   description: "Created by Mohamed Hazem Hassine and Yasmine Marzouk",
 };
@@ -22,7 +26,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

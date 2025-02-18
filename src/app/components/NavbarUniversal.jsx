@@ -1,12 +1,13 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 function NavbarUniversal() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const router = useRouter("/singup");
   return (
     <nav className="bg-gradient-to-r from-blue-900 to-purple-900 shadow-lg">
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
@@ -20,7 +21,7 @@ function NavbarUniversal() {
             Umfrage
           </span>
         </motion.div>
-        
+
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 items-center">
           <motion.div
@@ -38,6 +39,7 @@ function NavbarUniversal() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             className="py-2 px-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-medium shadow-md hover:shadow-lg transition-all"
+            onClick={() => router.replace("/signup")}
           >
             Get Started
           </motion.button>
@@ -66,7 +68,10 @@ function NavbarUniversal() {
           <div className="text-blue-100 cursor-pointer hover:text-blue-400 transition-colors font-medium">
             Poll Respondents
           </div>
-          <button className="w-full py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-medium">
+          <button
+            className="w-full py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-medium"
+            onClick={() => router.replace("/signup")}
+          >
             Get Started
           </button>
         </motion.div>
