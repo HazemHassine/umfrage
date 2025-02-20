@@ -1,47 +1,60 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { auth } from "@/lib/firebase"
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { motion, AnimatePresence } from "framer-motion"
-import { createUser } from "@/lib/api"
-import { useRouter } from "next/navigation"
-
+import { useState } from "react";
+import { auth } from "@/lib/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { motion, AnimatePresence } from "framer-motion";
+import { createUser } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignUpPage() {
-  const router = useRouter()
+  const router = useRouter();
   // Role selection: "participant" or "creator"
-  const [role, setRole] = useState(null)  
+  const [role, setRole] = useState(null);
 
   // Common fields
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [pushNotification, setPushNotification] = useState(false);
+  const [emailNotification, setEmailNotification] = useState(false);
+
+  const handlePushChange = (event) => {
+    setPushNotification(event.target.checked);
+  };
+  const handleEmailNotifChange = (event) => {
+    setEmailNotification(event.target.checked);
+  };
 
   // Participant-specific fields
-  const [age, setAge] = useState("")
-  const [occupation, setOccupation] = useState("")
-  const [occupationOther, setOccupationOther] = useState("")
+  const [age, setAge] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [occupationOther, setOccupationOther] = useState("");
 
   // Creator-specific fields
-  const [creatorType, setCreatorType] = useState("")
-  const [creatorOther, setCreatorOther] = useState("")
+  const [creatorType, setCreatorType] = useState("");
+  const [creatorOther, setCreatorOther] = useState("");
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!role) {
-      alert("Please select a role to continue.")
-      return
+      alert("Please select a role to continue.");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      const user = userCredential.user
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
       // Prepare user data based on role
       const userData = {
@@ -49,20 +62,28 @@ export default function SignUpPage() {
         name,
         email,
         role,
+        pushNotification,
+        emailNotification,
+        theme: "light",
         ...(role === "participant"
-          ? { age, occupation: occupation === "Other" ? occupationOther : occupation }
-          : { creatorType: creatorType === "Other" ? creatorOther : creatorType }),
-      }
+          ? {
+              age,
+              occupation: occupation === "Other" ? occupationOther : occupation,
+            }
+          : {
+              creatorType: creatorType === "Other" ? creatorOther : creatorType,
+            }),
+      };
 
       // Send user data to our API to store in MongoDB
-      await createUser(userData)
-      router.replace("/profile")
+      await createUser(userData);
+      router.replace("/profile");
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-purple-900 p-6">
@@ -183,7 +204,9 @@ export default function SignUpPage() {
 
                 {occupation === "Other" && (
                   <div>
-                    <label className="text-gray-700 block mb-1">Please specify your occupation</label>
+                    <label className="text-gray-700 block mb-1">
+                      Please specify your occupation
+                    </label>
                     <input
                       type="text"
                       value={occupationOther}
@@ -207,7 +230,9 @@ export default function SignUpPage() {
                 className="space-y-4"
               >
                 <div>
-                  <label className="text-gray-700 block mb-1">Creator Type</label>
+                  <label className="text-gray-700 block mb-1">
+                    Creator Type
+                  </label>
                   <select
                     value={creatorType}
                     onChange={(e) => setCreatorType(e.target.value)}
@@ -224,7 +249,9 @@ export default function SignUpPage() {
 
                 {creatorType === "Other" && (
                   <div>
-                    <label className="text-gray-700 block mb-1">Please specify your affiliation</label>
+                    <label className="text-gray-700 block mb-1">
+                      Please specify your affiliation
+                    </label>
                     <input
                       type="text"
                       value={creatorOther}
@@ -238,7 +265,32 @@ export default function SignUpPage() {
               </motion.div>
             )}
           </AnimatePresence>
-
+          <div className="flex flex-col items-start">
+            <div className="flex gap-2 items-center text-gray-700">
+              <input
+                type="checkbox"
+                checked={pushNotification}
+                onChange={handlePushChange}
+                name="notification"
+                id="notification"
+                className="text-cyan-700 accent-purple-800"
+              />
+              <label htmlFor="notification">Enable Push notifications</label>
+            </div>
+            <div className="flex gap-2 items-center text-gray-700">
+              <input
+                type="checkbox"
+                checked={emailNotification}
+                onChange={handleEmailNotifChange}
+                name="emailNotification"
+                id="emailNotification"
+                className="text-cyan-700 accent-purple-800"
+              />
+              <label htmlFor="emailNotification">
+                Enable Emails notifications
+              </label>
+            </div>
+          </div>
           {/* Submit Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -246,7 +298,9 @@ export default function SignUpPage() {
             type="submit"
             disabled={loading}
             className={`w-full py-3 mt-4 text-lg font-semibold rounded-lg text-white ${
-              loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-500"
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-500"
             }`}
           >
             {loading ? "Signing Up..." : "Sign Up"}
@@ -254,13 +308,12 @@ export default function SignUpPage() {
 
           <p className="mt-4 text-center text-gray-700">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-500 underline">
+            <Link href="/login" className="text-blue-500 underline">
               Log in
-            </a>
+            </Link>
           </p>
         </form>
       </motion.div>
     </div>
-  )
+  );
 }
-

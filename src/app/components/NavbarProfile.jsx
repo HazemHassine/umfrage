@@ -32,7 +32,8 @@ function NavbarProfile({ user }) {
       label: "Logout",
       icon: LogOut,
       onClick: () => {
-        /* Implement logout logic */
+        // [TODO]: check
+        unsubscribe();
       },
     },
   ];
