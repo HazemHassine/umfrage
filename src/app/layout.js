@@ -2,7 +2,8 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from '@/contexts/AuthContext';
-
+import { auth, onAuthStateChanged } from '@/lib/firebase';
+import { useEffect, useState } from "react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,7 +21,21 @@ const metadata = {
   description: "Created by Mohamed Hazem Hassine and Yasmine Marzouk",
 };
 
+
 export default function RootLayout({ children }) {
+
+  const [UID, setUID] = useState(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUID(user);
+      } else {
+        setUID(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
   return (
     <html lang="en">
       <body

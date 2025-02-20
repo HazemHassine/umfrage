@@ -5,6 +5,7 @@ import { Menu, X, User, Settings, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 
 function NavbarProfile({ user }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,10 @@ function NavbarProfile({ user }) {
   const router = useRouter();
   const profileRef = useRef(null);
 
+  const AuthContextUsage = useAuth()
+  console.log("firebaseUser", AuthContextUsage.firebaseUser);
+  
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {

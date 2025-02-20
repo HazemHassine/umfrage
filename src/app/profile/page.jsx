@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { User, Mail, Briefcase, Calendar, Award, Settings, Bell, CreditCard } from 'lucide-react';
 import Footer from "@/app/components/Footer";
 import NavbarProfile from '../components/NavbarProfile';
+import Link from 'next/link';
 
 const AnimatedSection = ({ children }) => {
   const [ref, inView] = useInView({
@@ -145,9 +146,9 @@ export default function ProfilePage() {
               </h2>
               <ul className="space-y-2">
                 <li>
-                  <button className="w-full text-left py-2 px-4 rounded bg-gray-100 hover:bg-gray-200 transition duration-200 flex items-center">
-                    <Bell className="mr-2" /> Notification Settings
-                  </button>
+                  <Link  href="/profile/settings"  className="w-full text-left py-2 px-4 rounded bg-gray-100 hover:bg-gray-200 transition duration-200 flex items-center">
+                    <Bell className="mr-2"/> Notification Settings
+                  </Link>
                 </li>
                 <li>
                   <button className="w-full text-left py-2 px-4 rounded bg-gray-100 hover:bg-gray-200 transition duration-200 flex items-center">

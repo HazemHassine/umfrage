@@ -5,6 +5,7 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged
 } from 'firebase/auth';
 
 // Firebase configuration
@@ -49,4 +50,4 @@ export const signIn = async (email, password) => {
   }
 };
 
-export { auth };
+export { auth, onAuthStateChanged };

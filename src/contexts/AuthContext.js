@@ -5,12 +5,12 @@ import { onAuthStateChanged } from 'firebase/auth';
 const AuthContext = createContext({ user: null, loading: true });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [firebaseUser, setFirebaseUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      setFirebaseUser(currentUser);
       setLoading(false);
     });
 
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ firebaseUser, loading }}>
       {children}
     </AuthContext.Provider>
   );
